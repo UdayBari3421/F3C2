@@ -1,25 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
   const app = document.getElementById("app");
 
-  const isLoggedIn = localStorage.getItem("accessToken") !== null;
+  const isLogin = localStorage.getItem("accessToken") !== null;
 
-  const isSignupPage = window.location.pathname.includes("signup.html");
+  const isSignUp = window.location.pathname.includes("signup.html");
   const isProfilePage = window.location.pathname.includes("profile.html");
 
-  if (!isLoggedIn && isProfilePage) {
-    redirectToSignup("You need to log in to access the Profile page.", "error");
-  } else if (isLoggedIn && isSignupPage) {
+  if (!isLogin && isProfilePage) {
+    goToSignup("You need to log in to access the Profile page.", "error");
+  } else if (isLogin && isSignUp) {
     redirectToProfile(
       "You are already logged in. Redirecting to Profile page...",
       "info"
     );
-  } else if (isLoggedIn) {
-    renderProfilePage();
+  } else if (isLogin) {
+    dispprofile();
   } else {
-    redirectToSignup();
+    goToSignup();
   }
 
-  function redirectToSignup(message = "", messageType = "") {
+  function goToSignup(message = "", messageType = "") {
     app.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="1980" height="487" viewBox="0 0 1980 487" fill="none">
                 <path d="M24 0L1980 351.443V487H-24V0Z" fill="#5BF7DB" />
@@ -83,12 +83,12 @@ document.addEventListener("DOMContentLoaded", function () {
           "success"
         );
 
-        renderProfilePage();
+        dispprofile();
       }, 1000);
     });
   }
 
-  function renderProfilePage() {
+  function dispprofile() {
     const username = localStorage.getItem("username");
     const useremail = localStorage.getItem("useremail");
     const password = localStorage.getItem("password");
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     logoutBtn.addEventListener("click", function () {
       localStorage.clear();
-      redirectToSignup();
+      goToSignup();
     });
   }
 
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     logoutBtn.addEventListener("click", function () {
       localStorage.clear();
-      redirectToSignup();
+      goToSignup();
     });
   }
 
